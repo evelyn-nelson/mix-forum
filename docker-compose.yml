@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: messageboard-backend
+    volumes:
+      - ./server/db.sqlite:/app/server/db.sqlite
+    environment:
+      - PORT=3001
+    restart: unless-stopped
+    profiles: ["production", "development"]
+  caddy:
+    build:
+      context: .
+      dockerfile: Caddy.Dockerfile
+    container_name: mix-forum-caddy
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./dist:/usr/share/caddy/html
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - backend
+    profiles: ["production", "development"]
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: mix-forum-cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN} --url http://caddy:8090
+    env_file:
+      - .env
+    depends_on:
+      - caddy
+    profiles: ["production"]

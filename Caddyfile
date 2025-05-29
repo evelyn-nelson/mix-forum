@@ -1,0 +1,22 @@
+{
+    servers {
+		trusted_proxies cloudflare
+	}
+}
+
+http://localhost:8090 {
+    log {
+        output stdout
+        format console
+    }
+
+    handle_path /api/* {
+        reverse_proxy backend:3001
+    }
+
+    handle {
+        root * /usr/share/caddy/html
+        try_files {path} {path}/ /index.html
+        file_server
+    }
+}

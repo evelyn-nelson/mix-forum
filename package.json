@@ -4,24 +4,45 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:frontend": "tsc && vite build",
+    "build:backend": "npm run build --prefix server",
+    "build": "npm run build:frontend && npm run build:backend",
+
+    "start:backend_prod": "npm run start --prefix server",
+
+    "_pm2:ensure_caddy_stopped": "pm2 delete caddy-proxy || true",
+    "_pm2:ensure_backend_stopped": "pm2 delete messageboard-backend || true",
+
+    "deploy:start": "npm run build && npm run _pm2:ensure_caddy_stopped && npm run _pm2:ensure_backend_stopped && pm2 start npm --name \"messageboard-backend\" -- run start:backend_prod && pm2 start caddy --name \"caddy-proxy\" -- run --config ./Caddyfile --adapter caddyfile && pm2 save && pm2 list",
+    "deploy:stop": "pm2 stop caddy-proxy && pm2 stop messageboard-backend && pm2 save",
+    "deploy:delete": "pm2 delete caddy-proxy && pm2 delete messageboard-backend && pm2 save",
+    "logs": "pm2 logs",
+    "logs:backend": "pm2 logs messageboard-backend",
+    "logs:caddy": "pm2 logs caddy-proxy"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.24",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@types/sqlite3": "^3.1.11",
     "@vitejs/plugin-react-swc": "^3.9.0",
+    "concurrently": "^9.1.2",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
