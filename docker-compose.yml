@@ -19,7 +19,7 @@ services:
     container_name: mix-forum-caddy
     restart: unless-stopped
     ports:
-      - "8090:8090"
+      - "8093:8093"
     volumes:
       - ./dist:/usr/share/caddy/html
       - ./Caddyfile:/etc/caddy/Caddyfile
