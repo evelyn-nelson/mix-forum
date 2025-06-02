@@ -7,9 +7,11 @@ services:
       dockerfile: backend.Dockerfile
     container_name: messageboard-backend
     volumes:
-      - ./server/db.sqlite:/app/server/db.sqlite
+      - ./server/db.sqlite:/data
     environment:
       - PORT=3001
+    ports:
+      - "3001:3001"
     restart: unless-stopped
     profiles: ["production", "development"]
   caddy:
