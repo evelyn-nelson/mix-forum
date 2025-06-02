@@ -116,7 +116,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>MIX NYC Message Board</h1>
+      <h1>MIX NYC Mixed Connections</h1>
       <form onSubmit={handleSubmit} className="post-form">
         <div>
           <label htmlFor="author">Name (Optional):</label>
