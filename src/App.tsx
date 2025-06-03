@@ -116,7 +116,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>MIX NYC Message Board</h1>
+      <h1>MIX NYC Mixed Connections</h1>
       <form onSubmit={handleSubmit} className="post-form">
         <div>
           <label htmlFor="author">Name (Optional):</label>
@@ -170,6 +170,9 @@ function App() {
           ))}
         </ul>
       </div>
+	  <div className="footer">
+		<p>Built by Evelyn, hosted by Esti</p>
+	  </div>
     </div>
   );
 }
