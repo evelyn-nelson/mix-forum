@@ -7,7 +7,7 @@ services:
       dockerfile: backend.Dockerfile
     container_name: messageboard-backend
     volumes:
-      - ./server/db.sqlite:/data
+      - ./server/database:/data
     environment:
       - PORT=3001
     restart: unless-stopped
