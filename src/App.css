@@ -222,3 +222,11 @@ h2 {
   border: var(--border-thickness) solid var(--border-color);
   box-shadow: var(--hard-shadow);
 }
+
+.footer {
+  margin: 0 auto;
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--text-color-on-green);
+  opacity: 0.8;
+}

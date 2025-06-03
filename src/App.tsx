@@ -170,6 +170,9 @@ function App() {
           ))}
         </ul>
       </div>
+	  <div className="footer">
+		<p>Built by Evelyn, hosted by Esti</p>
+	  </div>
     </div>
   );
 }
